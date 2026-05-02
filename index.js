@@ -7,6 +7,13 @@ const server = http.createServer(
     console.log(req.url);
     console.log(req.method);
     console.log(req.headers);
+
+    req.on('data',
+      (chunk) => {
+        console.log(chunk.toString());
+      }
+    );
+
     res.write("My name is Rayid Hussain");
     res.end();
   }

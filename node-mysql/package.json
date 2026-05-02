@@ -1,0 +1,22 @@
+{
+  "name": "node-mysql",
+  "version": "1.0.0",
+  "description": "connecting mysql database with node",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node database.js",
+    "dev": "nodemon database.js",
+    "noteApp": "nodemon noteApp.js"
+  },
+  "author": "Rayid A.H.M.",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mysql2": "^3.22.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
