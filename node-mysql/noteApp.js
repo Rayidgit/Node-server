@@ -1,7 +1,7 @@
 import express from 'express';
-import { getResults, getNoteById, insertNote } from './database.js';
+import { getResults, getNoteById, insertNote, updateNote } from './database.js';
 
-const PORT = 8080;
+const PORT = 3000;
 
 
 const noteApp = express();
@@ -22,10 +22,7 @@ noteApp.post('/newNote',
   async (req, res) => {
     const {title, contents} = req.body;
     const result =  await insertNote(title, contents);
-    // res.json({
-    //   message: "Note inserted successfully",
-      
-    // });
+    
     if(result) {
       res.json({
         message: "Note inserted successfully",
@@ -34,6 +31,28 @@ noteApp.post('/newNote',
     } else {
       res.status(500).json({
         message: "Failed to insert note" 
+      });
+    }
+  }
+)
+
+// Route for PUT note.
+noteApp.put('/updateNote/:id', 
+  async (req, res) => {
+    const {title, contents} = req.body;
+    const result =  await updateNote(title, contents, req.params.id);
+
+    console.log("BODY:", req.body);
+    console.log("ID:", req.params.id);
+    
+    if(result > 0) {
+      res.json({
+        message: "Note updated successfully",
+        updatedRows: result
+      });
+    } else {
+      res.status(500).json({
+        message: "Failed to update note" 
       });
     }
   }
@@ -50,6 +69,6 @@ noteApp.use((err, req, res, next) => {
 });
 
 
-noteApp.listen(8080, () => {
+noteApp.listen(3000, () => {
   console.log(`server is running on port ${PORT}`)
 })

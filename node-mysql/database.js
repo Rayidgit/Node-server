@@ -43,6 +43,12 @@ async function insertNote(title, contents){
 } 
 
 
+async function updateNote(title, contents,id){
+  const [result] = await pool.query(`UPDATE notes SET title = ?, contents = ? WHERE id = ? `, [title, contents,id])
+  return result.affectedRows;
+} 
+
+
 // const newNote = await insertNote('Third note', 'I am a Computer Engineering undergraduate student');
 // console.log(result);
 
@@ -53,4 +59,4 @@ const resultById = await getNoteById(2);
 console.log(resultById);
 
 
-export { getResults, getNoteById, insertNote };
+export { getResults, getNoteById, insertNote, updateNote };
