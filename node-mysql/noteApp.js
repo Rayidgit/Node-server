@@ -1,5 +1,5 @@
 import express from 'express';
-import { getResults, getNoteById, insertNote, updateNote } from './database.js';
+import { getResults, getNoteById, insertNote, updateNote,deleteNote  } from './database.js';
 
 const PORT = 3000;
 
@@ -58,6 +58,24 @@ noteApp.put('/updateNote/:id',
   }
 )
 
+
+noteApp.delete('/deleteNote/:id', 
+  async (req, res) => {
+    const id = req.params.id;
+    const result =  await deleteNote(id);
+    
+    if(result > 0) {
+      res.json({
+        message: "Note deleted successfully",
+        updatedRows: result
+      });
+    } else {
+      res.status(500).json({
+        message: "Failed to delete note" 
+      });
+    }
+  }
+)
 
 // Express@5 error handling middleware.
 noteApp.use((err, req, res, next) => {

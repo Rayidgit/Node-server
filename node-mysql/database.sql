@@ -8,6 +8,3 @@ CREATE TABLE notes (
   created TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
-INSERT INTO notes (title, contents) VALUES
-('First note', 'salaam'),
-('Second note', 'my name is Rayid')

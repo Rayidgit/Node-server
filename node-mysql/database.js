@@ -12,16 +12,6 @@ const pool = mysql.createPool(
   }
 ).promise(); 
 
-// (async () => {
-//   try {
-//     const result = await pool.query('SELECT * FROM notes');
-//     console.log(result);
-//   }
-//   catch (err) {
-//     console.log(err);
-//   }
-  
-// })();
 // TO GET ALL THE NOTES FROM THE TABLE.
 async function getResults() {
   const result = await pool.query('SELECT * FROM notes');
@@ -49,14 +39,12 @@ async function updateNote(title, contents,id){
 } 
 
 
-// const newNote = await insertNote('Third note', 'I am a Computer Engineering undergraduate student');
-// console.log(result);
 
-const result = await getResults();
-console.log(result);
-
-const resultById = await getNoteById(2);
-console.log(resultById);
+async function deleteNote(id){
+  const [result] = await pool.query(`DELETE FROM notes WHERE id = ?`, [id])
+  return result.affectedRows;
+}
 
 
-export { getResults, getNoteById, insertNote, updateNote };
+
+export { getResults, getNoteById, insertNote, updateNote, deleteNote };
