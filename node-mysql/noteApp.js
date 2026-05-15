@@ -71,7 +71,7 @@ noteApp.delete('/deleteNote/:id',
         updatedRows: result
       });
     } else {
-      res.status(500).json({
+      res.status(204).json({
         message: "Failed to delete note" 
       });
     }
