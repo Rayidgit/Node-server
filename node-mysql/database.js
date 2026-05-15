@@ -19,7 +19,7 @@ async function getResults() {
 }
 
 
-
+// TO GET A SINGLE NOTE  FROM THE TABLE.
 async function getNoteById(id){
   const [result] = await pool.query(`SELECT * FROM notes WHERE id = ?`, [id]);
   return result[0];
