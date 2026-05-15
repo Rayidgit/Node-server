@@ -14,6 +14,7 @@ noteApp.get('/notes',
   async (req, res) => {
     const notes = await getResults();
     res.json(notes);
+//This will not work unless the express.json() middleware is not available.
   }
 )
 
