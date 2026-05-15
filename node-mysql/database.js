@@ -35,7 +35,7 @@ async function insertNote(title, contents){
 
 async function updateNote(title, contents,id){
   const [result] = await pool.query(`UPDATE notes SET title = ?, contents = ? WHERE id = ? `, [title, contents,id])
-  return result.affectedRows;
+  return result.affectedRows && result.insertId;
 } 
 
 
