@@ -30,8 +30,8 @@ noteApp.post('/newNote',
         noteId: result
       });
     } else {
-      res.status(500).json({
-        message: "Failed to insert note" 
+      res.status(401).json({
+        message: "Failed to insert note due to bad request from user's end poin." 
       });
     }
   }
