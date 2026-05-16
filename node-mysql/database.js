@@ -19,7 +19,11 @@ async function getResults() {
 }
 
 
+<<<<<<< HEAD
 // TO GET A NOTE BY ID.
+=======
+// TO GET A SINGLE NOTE  FROM THE TABLE.
+>>>>>>> c53b9a2de7c20f047a0dcb6c8f41539524a52a61
 async function getNoteById(id){
   const [result] = await pool.query(`SELECT * FROM notes WHERE id = ?`, [id]);
   return result[0];
@@ -35,7 +39,7 @@ async function insertNote(title, contents){
 
 async function updateNote(title, contents,id){
   const [result] = await pool.query(`UPDATE notes SET title = ?, contents = ? WHERE id = ? `, [title, contents,id])
-  return result.affectedRows;
+  return result.affectedRows && result.insertId;
 } 
 
 
