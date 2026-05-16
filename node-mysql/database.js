@@ -38,7 +38,6 @@ async function updateNote(title, contents, id) {
   return result.affectedRows;
 }
 
-// For update and delete operations insertId feild is always = 0;
 
 async function deleteNote(id) {
   const [result] = await pool.query(`DELETE FROM notes WHERE id = ?`, [id])

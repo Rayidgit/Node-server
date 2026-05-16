@@ -1,5 +1,5 @@
 import express from 'express';
-import { getResults, getNoteById, insertNote, updateNote,deleteNote  } from './database.js';
+import { getResults, getNoteById, insertNote, updateNote, deleteNote } from './database.js';
 
 const PORT = 3000;
 
@@ -10,37 +10,37 @@ const noteApp = express();
 noteApp.use(express.json());
 
 // Routes for Database operations.
-noteApp.get('/notes', 
+noteApp.get('/notes',
   async (req, res) => {
-    try{
+    try {
       const notes = await getResults();
       res.status(200).json(notes);
     }
-    catch(err) {
+    catch (err) {
       console.error(err);
       res.status(500).json(
         {
-          message : "Failed to fetch notes from database."
+          message: "Failed to fetch notes from database."
         }
       )
     }
   }
 )
 
-noteApp.get('/notes/:id', 
+noteApp.get('/notes/:id',
   async (req, res) => {
-    try{
+    try {
       const note = await getNoteById(req.params.id);
       if (!note || (Array.isArray(note) && note.length === 0)) {
         return res.status(404).json({ message: "Note not found" });
       }
       res.status(200).json(note);
     }
-    catch(err) {
+    catch (err) {
       console.error(err);
       res.status(500).json(
         {
-          message : "Failed to fetch note from database."
+          message: "Failed to fetch note from database."
         }
       )
     }
@@ -48,60 +48,60 @@ noteApp.get('/notes/:id',
 )
 
 // Route for POST new note.
-noteApp.post('/newNote', 
+noteApp.post('/notes',
   async (req, res) => {
-    const {title, contents} = req.body;
-    const result =  await insertNote(title, contents);
-    
-    if(result) {
+    const { title, contents } = req.body;
+    const result = await insertNote(title, contents);
+
+    if (result) {
       res.status(201).json({
         message: "Note inserted successfully",
         noteId: result
       });
     } else {
       res.status(401).json({
-        message: "Failed to insert note due to bad request from user's end point." 
+        message: "Failed to insert note due to bad request from user's end point."
       });
     }
   }
 )
 
 // Route for PUT note.
-noteApp.put('/updateNote/:id', 
+noteApp.put('/notes/:id',
   async (req, res) => {
-    const {title, contents} = req.body;
-    const result =  await updateNote(title, contents, req.params.id);
+    const { title, contents } = req.body;
+    const result = await updateNote(title, contents, req.params.id);
 
     console.log("BODY:", req.body);
     console.log("ID:", req.params.id);
-    
-    if(result > 0) {
+
+    if (result > 0) {
       res.status(200).json({
         message: "Note updated successfully",
         updatedRows: result
       });
     } else {
       res.status(404).json({
-        message: "Note not found or failed to update" 
+        message: "Note not found or failed to update"
       });
     }
   }
 )
 
 
-noteApp.delete('/deleteNote/:id', 
+noteApp.delete('/notes/:id',
   async (req, res) => {
     const id = req.params.id;
-    const result =  await deleteNote(id);
-    
-    if(result > 0) {
+    const result = await deleteNote(id);
+
+    if (result > 0) {
       res.status(200).json({
         message: "Note deleted successfully",
         updatedRows: result
       });
     } else {
       res.status(404).json({
-        message: "Note not found or failed to delete" 
+        message: "Note not found or failed to delete"
       });
     }
   }
