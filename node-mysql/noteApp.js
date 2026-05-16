@@ -12,8 +12,38 @@ noteApp.use(express.json());
 // Routes for Database operations.
 noteApp.get('/notes', 
   async (req, res) => {
-    const notes = await getResults();
-    res.json(notes);
+    try{
+      const notes = await getResults();
+      res.status(200).json(notes);
+    }
+    catch(err) {
+      console.error(err);
+      res.status(500).json(
+        {
+          message : "Failed to fetch notes from database."
+        }
+      )
+    }
+  }
+)
+
+noteApp.get('/notes/:id', 
+  async (req, res) => {
+    try{
+      const note = await getNoteById(req.params.id);
+      if (!note || (Array.isArray(note) && note.length === 0)) {
+        return res.status(404).json({ message: "Note not found" });
+      }
+      res.status(200).json(note);
+    }
+    catch(err) {
+      console.error(err);
+      res.status(500).json(
+        {
+          message : "Failed to fetch note from database."
+        }
+      )
+    }
   }
 )
 
@@ -24,7 +54,7 @@ noteApp.post('/newNote',
     const result =  await insertNote(title, contents);
     
     if(result) {
-      res.json({
+      res.status(201).json({
         message: "Note inserted successfully",
         noteId: result
       });
@@ -46,13 +76,13 @@ noteApp.put('/updateNote/:id',
     console.log("ID:", req.params.id);
     
     if(result > 0) {
-      res.json({
+      res.status(200).json({
         message: "Note updated successfully",
         updatedRows: result
       });
     } else {
-      res.status(500).json({
-        message: "Failed to update note" 
+      res.status(404).json({
+        message: "Note not found or failed to update" 
       });
     }
   }
@@ -65,13 +95,13 @@ noteApp.delete('/deleteNote/:id',
     const result =  await deleteNote(id);
     
     if(result > 0) {
-      res.json({
+      res.status(200).json({
         message: "Note deleted successfully",
         updatedRows: result
       });
     } else {
-      res.status(500).json({
-        message: "Failed to delete note" 
+      res.status(404).json({
+        message: "Note not found or failed to delete" 
       });
     }
   }

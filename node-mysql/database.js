@@ -14,12 +14,12 @@ const pool = mysql.createPool(
 
 // TO GET ALL THE NOTES FROM THE TABLE.
 async function getResults() {
-  const result = await pool.query('SELECT * FROM notes');
+  const result = await pool.query('SELECT * FROM notes ORDER BY id DESC');
   return result[0];
 }
 
 
-
+// TO GET A NOTE BY ID.
 async function getNoteById(id){
   const [result] = await pool.query(`SELECT * FROM notes WHERE id = ?`, [id]);
   return result[0];
