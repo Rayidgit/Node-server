@@ -12,7 +12,6 @@ noteApp.use(express.json());
 // Routes for Database operations.
 noteApp.get('/notes', 
   async (req, res) => {
-<<<<<<< HEAD
     try{
       const notes = await getResults();
       res.status(200).json(notes);
@@ -45,11 +44,6 @@ noteApp.get('/notes/:id',
         }
       )
     }
-=======
-    const notes = await getResults();
-    res.json(notes);
-//This will not work unless the express.json() middleware is not available.
->>>>>>> c53b9a2de7c20f047a0dcb6c8f41539524a52a61
   }
 )
 
@@ -106,13 +100,8 @@ noteApp.delete('/deleteNote/:id',
         updatedRows: result
       });
     } else {
-<<<<<<< HEAD
       res.status(404).json({
         message: "Note not found or failed to delete" 
-=======
-      res.status(204).json({
-        message: "Failed to delete note" 
->>>>>>> c53b9a2de7c20f047a0dcb6c8f41539524a52a61
       });
     }
   }
