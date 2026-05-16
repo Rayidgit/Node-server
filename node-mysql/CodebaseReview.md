@@ -148,3 +148,50 @@ javascript
   undefined
 ]
 This is why in your insertNote function, you do const [result] = await pool.query(...) to grab that status object, and then return result.insertId;.
+
+
+
+//(04.)
+
+Question : Response Structure for Insert, Update and Delete
+
+Answer :
+
+The Result for Insert Operation.
+[
+  // Item 0: The Status Object
+  {
+    fieldCount: 0,
+    affectedRows: 1,
+    insertId: 5,       // <-- You use this in your insertNote function!
+    info: '',
+    serverStatus: 2,
+    warningStatus: 0
+  },
+  
+  // Item 1: Metadata (usually undefined for INSERT)
+  undefined
+]
+
+The Result for UPDATE.
+{
+  fieldCount: 0,
+  affectedRows: 1,    // Number of rows matched by your WHERE clause
+  insertId: 0,        // Always 0 for updates (unless you specifically update an auto-increment column)
+  info: 'Rows matched: 1  Changed: 1  Warnings: 0',
+  serverStatus: 2,
+  warningStatus: 0,
+  changedRows: 1      // Number of rows whose values actually changed
+}
+
+The Result for DELETE.
+{
+  fieldCount: 0,
+  affectedRows: 1,    // Number of rows deleted
+  insertId: 0,        // Always 0 for deletes
+  info: '',
+  serverStatus: 2,
+  warningStatus: 0
+}
+
+

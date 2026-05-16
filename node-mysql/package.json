@@ -5,9 +5,8 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "node database.js",
-    "dev": "nodemon database.js",
-    "noteApp": "nodemon noteApp.js"
+    "start": "node noteApp.js",
+    "dev": "nodemon noteApp.js"
   },
   "author": "Rayid A.H.M.",
   "license": "ISC",
